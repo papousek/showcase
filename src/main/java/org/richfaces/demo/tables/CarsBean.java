@@ -21,6 +21,8 @@ import org.richfaces.demo.common.data.RandomHelper;
 import org.richfaces.demo.tables.model.cars.InventoryItem;
 import org.richfaces.demo.tables.model.cars.InventoryVendorItem;
 import org.richfaces.demo.tables.model.cars.InventoryVendorList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ManagedBean(name = "carsBean")
 @ViewScoped
@@ -37,6 +39,7 @@ public class CarsBean implements Serializable {
     private int currentCarIndex;
     private InventoryItem editedCar;
     private int page = 1;
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarsBean.class);
 
     private int clientRows;
 
@@ -48,6 +51,20 @@ public class CarsBean implements Serializable {
         allInventoryItems.remove(allInventoryItems.get(currentCarIndex));
     }
 
+    public void removeFirst() {
+        LOGGER.info("REMOVE FIRST");
+        LOGGER.info("SIZE BEFORE: " + allInventoryItems.size());
+        allInventoryItems.remove(0);
+        LOGGER.info("SIZE AFTER: " + allInventoryItems.size());
+    }
+    
+    public void removeLast() {
+        LOGGER.info("REMOVE LAST");
+        LOGGER.info("SIZE BEFORE: " + allInventoryItems.size());
+        allInventoryItems.remove(allInventoryItems.size() - 1);
+        LOGGER.info("SIZE AFTER: " + allInventoryItems.size());
+    }
+    
     public void store() {
         allInventoryItems.set(currentCarIndex, editedCar);
     }

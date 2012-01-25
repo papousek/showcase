@@ -1,68 +1,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
-	<h:form>
-		<fieldset>
-			<legend><b>Ajax loading</b></legend>
-			<h:outputText value="Turn ajax loading on/off:"/>
-			<h:selectBooleanCheckbox valueChangeListener="#{carsBean.switchAjaxLoading}">
-				<a4j:ajax event="click" render="table @this"/>
-			</h:selectBooleanCheckbox>
-		</fieldset>
-		<br/>
-		<rich:extendedDataTable value="#{carsBean.allInventoryItems}"
-			var="car" id="table" frozenColumns="2"
-			style="height:300px; width:500px;" selectionMode="none"
-			clientRows="#{carsBean.clientRows}">
-			<f:facet name="header">
-				<h:outputText value="Cars marketplace" />
-			</f:facet>
-			<rich:column>
-				<f:facet name="header">
-					<h:outputText value="vendor" />
-				</f:facet>
-				<h:outputText value="#{car.vendor}" />
-			</rich:column>
-			<rich:column>
-				<f:facet name="header">
-					<h:outputText value="Model" />
-				</f:facet>
-				<h:outputText value="#{car.model}" />
-			</rich:column>
-			<rich:column>
-				<f:facet name="header">
-					<h:outputText value="Price" />
-				</f:facet>
-				<h:outputText value="#{car.price}" />
-			</rich:column>
-			<rich:column>
-				<f:facet name="header">
-					<h:outputText value="Mileage" />
-				</f:facet>
-				<h:outputText value="#{car.mileage}" />
-			</rich:column>
-			<rich:column>
-				<f:facet name="header">
-					<h:outputText value="VIN Code" />
-				</f:facet>
-				<h:outputText value="#{car.vin}" />
-			</rich:column>
-			<rich:column>
-				<f:facet name="header">
-					<h:outputText value="Items stock" />
-				</f:facet>
-				<h:outputText value="#{car.stock}" />
-			</rich:column>
-			<rich:column>
-				<f:facet name="header">
-					<h:outputText value="Days Live" />
-				</f:facet>
-				<h:outputText value="#{car.daysLive}" />
-			</rich:column>
-		</rich:extendedDataTable>
-	</h:form>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+    <h:form>
+        <fieldset>
+            <legend>
+                <b>Ajax loading</b>
+            </legend>
+            <h:outputText value="Turn ajax loading on/off:" />
+            <h:selectBooleanCheckbox valueChangeListener="#{carsBean.switchAjaxLoading}">
+                <a4j:ajax event="click" render="table @this" />
+            </h:selectBooleanCheckbox>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <strong>RF-11875</strong>
+            </legend>
+            <p>
+                <a href="https://issues.jboss.org/browse/RF-11875">RF-11875</a>: rich:extendedDataTable in ajax loading mode, crashes when dataset length changes between requests
+            </p>
+            <p><strong>Steps to reproduce:</strong></p>
+            <ol>
+                <li>Check "Turn ajax loading on/off" checkbox.</li>
+                <li>Click "Remove First" button.</li>
+                <li>Scroll table content to the end.</li>
+                <li>Scroll table content to begin.</li>
+                <li>See logs to find: <tt>java.lang.IndexOutOfBoundsException: Index: 0, Size: 0</tt></li>
+            </ol>
+            <p>
+                <a4j:commandButton action="#{carsBean.removeFirst}" value="Remove First" />
+            </p>
+            <p>
+                <a4j:commandButton action="#{carsBean.removeLast}" value="Remove Last" />
+            </p>
+        </fieldset>
+        <br />
+        <rich:extendedDataTable value="#{carsBean.allInventoryItems}" var="car" id="table" frozenColumns="2"
+            style="height:300px; width:500px;" selectionMode="none" clientRows="#{carsBean.clientRows}">
+            <f:facet name="header">
+                <h:outputText value="Cars marketplace" />
+            </f:facet>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="vendor" />
+                </f:facet>
+                <h:outputText value="#{car.vendor}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Model" />
+                </f:facet>
+                <h:outputText value="#{car.model}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Price" />
+                </f:facet>
+                <h:outputText value="#{car.price}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Mileage" />
+                </f:facet>
+                <h:outputText value="#{car.mileage}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="VIN Code" />
+                </f:facet>
+                <h:outputText value="#{car.vin}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Items stock" />
+                </f:facet>
+                <h:outputText value="#{car.stock}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Days Live" />
+                </f:facet>
+                <h:outputText value="#{car.daysLive}" />
+            </rich:column>
+        </rich:extendedDataTable>
+    </h:form>
 </ui:composition>
