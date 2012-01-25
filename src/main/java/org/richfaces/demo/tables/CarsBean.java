@@ -57,14 +57,14 @@ public class CarsBean implements Serializable {
         allInventoryItems.remove(0);
         LOGGER.info("SIZE AFTER: " + allInventoryItems.size());
     }
-    
+
     public void removeLast() {
         LOGGER.info("REMOVE LAST");
         LOGGER.info("SIZE BEFORE: " + allInventoryItems.size());
         allInventoryItems.remove(allInventoryItems.size() - 1);
         LOGGER.info("SIZE AFTER: " + allInventoryItems.size());
     }
-    
+
     public void store() {
         allInventoryItems.set(currentCarIndex, editedCar);
     }
